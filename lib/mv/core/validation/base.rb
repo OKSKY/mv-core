@@ -13,8 +13,8 @@ module Mv
         validates :as, inclusion: { in: :available_as }
 
         validates :on, absence: { message: 'allowed when :as == :trigger' }, unless: :trigger?
-        validates :create_trigger_name, absence: { message: 'allowed when :on in [:save, :create] and :as == :trigger'}, unless: "create? && trigger?"
-        validates :update_trigger_name, absence: { message: 'allowed when :on in [:save, :update] and :as == :trigger'}, unless: "update? && trigger?"
+        validates :create_trigger_name, absence: { message: 'allowed when :on in [:save, :create] and :as == :trigger'}, unless: -> {create? && trigger?}
+        validates :update_trigger_name, absence: { message: 'allowed when :on in [:save, :update] and :as == :trigger'}, unless: -> {update? && trigger?}
 
         def initialize table_name, column_name, options
           @table_name = table_name
